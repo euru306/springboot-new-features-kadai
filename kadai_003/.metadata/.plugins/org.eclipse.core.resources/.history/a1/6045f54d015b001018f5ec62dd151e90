@@ -1,0 +1,50 @@
+package com.example.samuraitravel.controller;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.samuraitravel.entity.House;
+import com.example.samuraitravel.entity.User;
+import com.example.samuraitravel.form.ReservationInputForm;
+import com.example.samuraitravel.repository.HouseRepository;
+import com.example.samuraitravel.service.FavoriteService;
+import com.example.samuraitravel.service.UserService;
+
+@Controller
+@RequestMapping("/houses")
+public class HouseController {
+    private final HouseRepository houseRepository;
+    private final FavoriteService favoriteService;
+    private final UserService userService;
+
+    public HouseController(HouseRepository houseRepository, FavoriteService favoriteService, UserService userService) {
+        this.houseRepository = houseRepository;
+        this.favoriteService = favoriteService;
+        this.userService = userService;
+    }     
+    
+    @GetMapping("/{id}")
+    public String show(@PathVariable(name = "id") Integer id, 
+                       @AuthenticationPrincipal UserDetails userDetails,
+                       Model model) 
+    {
+        House house = houseRepository.getReferenceById(id);
+        model.addAttribute("house", house);
+        model.addAttribute("reservationInputForm", new ReservationInputForm());
+
+        if (userDetails != null) {
+            User user = userService.findByEmail(userDetails.getUsername());  // emailで取得
+            boolean isFavorite = favoriteService.isFavorite(user, house);
+            model.addAttribute("isFavorite", isFavorite);
+        }
+        
+        return "houses/show";
+    }
+    
+   
+}
