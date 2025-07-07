@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>レビュー投稿</title>
+    <div th:replace="~{fragment :: meta}"></div>
+    <div th:replace="~{fragment :: styles}"></div>
+</head>
+<body>
+<div class="samuraitravel-wrapper">
+    <!-- ヘッダー -->
+    <div th:replace="~{fragment :: header}"></div>
+
+    <main>
+        <div class="container pt-4 pb-5 samuraitravel-container">
+            <div class="row justify-content-center">
+                <div class="col-xxl-6 col-xl-7 col-lg-8">
+                    <h1 class="mb-4 text-center">レビューを書く</h1>
+
+                    <!-- 投稿フォーム -->
+					<form method="post"
+					      th:action="@{/reviews/create/{houseId}(houseId=${reviewForm.house.id})}"
+					      th:object="${reviewForm}">
+
+					    <input type="hidden" th:field="*{house.id}" />
+
+					    <!-- グローバルエラーはここに置く -->
+					    <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger" role="alert">
+					        <ul>
+					            <li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
+					        </ul>
+					    </div>
+
+					    <div class="mb-3">
+					        <label for="content" class="form-label fw-bold">レビュー内容</label>
+					        <textarea th:field="*{content}" class="form-control" rows="5" required></textarea>
+					        <div th:if="${#fields.hasErrors('content')}" class="text-danger small mt-1" th:errors="*{content}"></div>
+					    </div>
+					    
+					    <div class="mb-3">
+					        <label for="rating" class="form-label fw-bold">評価（1〜5）</label>
+					        <select th:field="*{rating}" class="form-select" required>
+					            <option value="" disabled th:selected="*{rating} == null">選択してください</option>
+					            <option th:value="1" th:text="1"></option>
+					            <option th:value="2" th:text="2"></option>
+					            <option th:value="3" th:text="3"></option>
+					            <option th:value="4" th:text="4"></option>
+					            <option th:value="5" th:text="5"></option>
+					        </select>
+					        <div th:if="${#fields.hasErrors('rating')}" class="text-danger small mt-1" th:errors="*{rating}"></div>
+					    </div>
+
+					    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+					        <a th:href="@{/houses/{houseId}(houseId=${reviewForm.house.id})}" class="btn btn-secondary">戻る</a>
+					        <button type="submit" class="btn samuraitravel-btn text-white">投稿</button>
+					    </div>
+					</form>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <div th:replace="~{fragment :: footer}"></div>
+</div>
+
+<div th:replace="~{fragment :: scripts}"></div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+create database samuraitravel_db;
