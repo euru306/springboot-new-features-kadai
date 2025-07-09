@@ -1,0 +1,109 @@
+package com.example.samuraitravel.controller;
+
+import java.security.Principal;
+import java.time.LocalDateTime;
+
+import jakarta.validation.Valid;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.samuraitravel.entity.House;
+import com.example.samuraitravel.entity.Review;
+import com.example.samuraitravel.entity.User;
+import com.example.samuraitravel.repository.HouseRepository;
+import com.example.samuraitravel.repository.ReviewRepository;
+import com.example.samuraitravel.repository.UserRepository;
+import com.example.samuraitravel.service.Reviewservice;
+
+@Controller
+@RequestMapping("/reviews")
+public class ReviewController {
+
+    private final ReviewRepository reviewRepository;
+    private final HouseRepository houseRepository;
+    private final UserRepository userRepository;
+    private final Reviewservice reviewService;
+
+    public ReviewController(ReviewRepository reviewRepository, HouseRepository houseRepository,
+                            UserRepository userRepository, Reviewservice reviewService) {
+        this.reviewRepository = reviewRepository;
+        this.houseRepository = houseRepository;
+        this.userRepository = userRepository;
+        this.reviewService = reviewService;
+    }
+
+    // 投稿フォーム表示
+    @GetMapping("/new/{houseId}")
+    @PreAuthorize("isAuthenticated()")
+    public String newReview(@PathVariable Integer houseId, Model model) {
+        Review review = new Review();
+        House house = houseRepository.findById(houseId).orElseThrow();
+        review.setHouse(house); // house をセット（hiddenで使う）
+        model.addAttribute("review", review);
+        return "reviews/form";
+    }
+
+    // 投稿処理（バリデーション付き）
+    @PostMapping("/create/{houseId}")
+    @PreAuthorize("isAuthenticated()")
+    public String createReview(
+            @PathVariable Integer houseId,
+            @Valid @ModelAttribute("review") Review review,
+            BindingResult bindingResult,
+            Principal principal,
+            Model model) {
+
+        if (bindingResult.hasErrors()) {
+            return "reviews/form";
+        }
+
+        House house = houseRepository.findById(houseId).orElseThrow();
+        User user = userRepository.findByName(principal.getName());
+
+        review.setHouse(house);
+        review.setUser(user);
+        review.setCreatedAt(LocalDateTime.now());
+
+        reviewRepository.save(review);
+        return "redirect:/houses/" + houseId;
+    }
+
+    // 編集フォーム
+    @GetMapping("/edit/{id}")
+    @PreAuthorize("@reviewService.isOwner(#id, principal.name)")
+    public String edit(@PathVariable Long id, Model model) {
+        Review review = reviewRepository.findById(id).orElseThrow();
+        model.addAttribute("review", review);
+        return "reviews/editForm";
+    }
+
+    // 編集処理
+    @PostMapping("/update/{id}")
+    @PreAuthorize("@reviewService.isOwner(#id, principal.name)")
+    public String update(@PathVariable Long id, @ModelAttribute Review form) {
+        Review review = reviewRepository.findById(id).orElseThrow();
+        review.setContent(form.getContent());
+        review.setRating(form.getRating());
+        reviewRepository.save(review);
+        return "redirect:/houses/" + review.getHouse().getId();
+    }
+
+    // 削除処理
+    @PostMapping("/delete/{id}")
+    @PreAuthorize("@reviewService.isOwner(#id, principal.name)")
+    public String delete(@PathVariable Long id) {
+        Review review = reviewRepository.findById(id).orElseThrow();
+        Integer houseId = review.getHouse().getId(); // 型をLongに統一
+        reviewRepository.delete(review);
+        return "redirect:/houses/" + houseId;
+    }
+}
+

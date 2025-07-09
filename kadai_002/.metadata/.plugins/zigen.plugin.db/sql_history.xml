@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="21.0.7" class="java.beans.XMLDecoder">
+ <object class="java.util.LinkedList">
+  <void method="add">
+   <object class="zigen.plugin.db.core.SQLHistory">
+    <void property="config">
+     <object class="zigen.plugin.db.core.DBConfig" id="DBConfig0">
+      <void property="autoCommit">
+       <boolean>true</boolean>
+      </void>
+      <void property="charset">
+       <string></string>
+      </void>
+      <void property="classPaths">
+       <array class="java.lang.String" length="1">
+        <void index="0">
+         <string>C:\Users\81803\Documents\SAMURAI\mysql-connector-j-9.3.0\mysql-connector-j-9.3.0.jar</string>
+        </void>
+       </array>
+      </void>
+      <void property="convertUnicode">
+       <boolean>true</boolean>
+      </void>
+      <void property="dbName">
+       <string>SQL</string>
+      </void>
+      <void property="dbType">
+       <int>2</int>
+      </void>
+      <void property="driverName">
+       <string>com.mysql.cj.jdbc.Driver</string>
+      </void>
+      <void property="filterPattern">
+       <string></string>
+      </void>
+      <void property="noLockMode">
+       <boolean>true</boolean>
+      </void>
+      <void property="password">
+       <string>MySecurePass2025!</string>
+      </void>
+      <void property="schema">
+       <string></string>
+      </void>
+      <void property="url">
+       <string>jdbc:mysql://localhost:3306/</string>
+      </void>
+      <void property="userId">
+       <string>root</string>
+      </void>
+     </object>
+    </void>
+    <void property="date">
+     <object class="java.util.Date">
+      <long>1751104717548</long>
+     </object>
+    </void>
+    <void property="fileMode">
+     <boolean>true</boolean>
+    </void>
+    <void property="sql">
+     <string>drop database samuraitravel_db;</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="zigen.plugin.db.core.SQLHistory">
+    <void property="config">
+     <object idref="DBConfig0"/>
+    </void>
+    <void property="date">
+     <object class="java.util.Date">
+      <long>1751104740219</long>
+     </object>
+    </void>
+    <void property="fileMode">
+     <boolean>true</boolean>
+    </void>
+    <void property="sql">
+     <string>create database samuraitravel_db;</string>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>
