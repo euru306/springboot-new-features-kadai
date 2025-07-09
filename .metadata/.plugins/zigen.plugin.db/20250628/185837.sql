@@ -1,1 +1,0 @@
-drop database samuraitravel_db;

@@ -1,3 +1,0 @@
-INDEX VERSION 1.134
-file:/C:/Users/81803/Documents/SAMURAI/java%20Eclipse/kadai_002/kadai_002/.metadata/.plugins/org.eclipse.jdt.core/1865797976.index
-meta_index
