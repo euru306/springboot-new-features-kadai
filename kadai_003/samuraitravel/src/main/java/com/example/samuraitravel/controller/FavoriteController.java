@@ -1,0 +1,72 @@
+package com.example.samuraitravel.controller;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.samuraitravel.entity.Favorite;
+import com.example.samuraitravel.entity.House;
+import com.example.samuraitravel.entity.User;
+import com.example.samuraitravel.security.UserDetailsImpl;
+import com.example.samuraitravel.service.FavoriteService;
+import com.example.samuraitravel.service.HouseService;
+
+@Controller
+@RequestMapping("/favorites")
+public class FavoriteController {
+
+    private final FavoriteService favoriteService;
+    private final HouseService houseService;
+
+    public FavoriteController(FavoriteService favoriteService, HouseService houseService) {
+        this.favoriteService = favoriteService;
+        this.houseService = houseService;
+    }
+
+    // お気に入り一覧（ページネーション対応）
+    @GetMapping
+    public String favorites(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                            @PageableDefault(page = 0, size = 5) Pageable pageable,
+                            Model model) {
+
+        User user = userDetails.getUser();
+        Page<Favorite> favoritesPage = favoriteService.getFavoritesPageByUser(user, pageable);
+
+        // ★ HTML側と名前を合わせる
+        model.addAttribute("favorites", favoritesPage);
+
+        return "favorites/list";
+    }
+
+
+    // お気に入り追加
+    @PostMapping("/add/{houseId}")
+    public String addFavorite(@PathVariable Integer houseId,
+                              @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        User loginUser = userDetails.getUser();
+        House house = houseService.findById(houseId);
+        favoriteService.addFavorite(loginUser, house);
+
+        return "redirect:/houses/" + houseId;
+    }
+
+    // お気に入り削除
+    @PostMapping("/remove/{houseId}")
+    public String removeFavorite(@PathVariable Integer houseId,
+                                 @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        User loginUser = userDetails.getUser();
+        House house = houseService.findById(houseId);
+        favoriteService.removeFavorite(loginUser, house);
+
+        return "redirect:/houses/" + houseId;
+    }
+}
