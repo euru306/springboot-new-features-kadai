@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<libraryInfos>
+    <libraryInfo home="C:\Users\81803\Documents\SAMURAI\Pleiades All in One\java\8" version="1.8.0_442">
+        <bootpath>
+            <entry path="C:\Users\81803\Documents\SAMURAI\Pleiades All in One\java\8\jre\lib\resources.jar"/>
+            <entry path="C:\Users\81803\Documents\SAMURAI\Pleiades All in One\java\8\jre\lib\rt.jar"/>
+            <entry path="C:\Users\81803\Documents\SAMURAI\Pleiades All in One\java\8\jre\lib\sunrsasign.jar"/>
+            <entry path="C:\Users\81803\Documents\SAMURAI\Pleiades All in One\java\8\jre\lib\jsse.jar"/>
+            <entry path="C:\Users\81803\Documents\SAMURAI\Pleiades All in One\java\8\jre\lib\jce.jar"/>
+            <entry path="C:\Users\81803\Documents\SAMURAI\Pleiades All in One\java\8\jre\lib\charsets.jar"/>
+            <entry path="C:\Users\81803\Documents\SAMURAI\Pleiades All in One\java\8\jre\lib\jfr.jar"/>
+            <entry path="C:\Users\81803\Documents\SAMURAI\Pleiades All in One\java\8\jre\classes"/>
+        </bootpath>
+        <extensionDirs>
+            <entry path="C:\Users\81803\Documents\SAMURAI\Pleiades All in One\java\8\jre\lib\ext"/>
+            <entry path="C:\WINDOWS\Sun\Java\lib\ext"/>
+        </extensionDirs>
+        <endorsedDirs>
+            <entry path="C:\Users\81803\Documents\SAMURAI\Pleiades All in One\java\8\jre\lib\endorsed"/>
+        </endorsedDirs>
+    </libraryInfo>
+    <libraryInfo home="C:\Users\81803\Documents\SAMURAI\Pleiades All in One\java\21" version="21.0.6"/>
+    <libraryInfo home="C:\Users\81803\Documents\SAMURAI\Pleiades All in One\java\11" version="11.0.26"/>
+    <libraryInfo home="C:\Program Files\Java\jre1.8.0_211" version="1.8.0_211">
+        <bootpath>
+            <entry path="C:\Program Files\Java\jre1.8.0_211\lib\resources.jar"/>
+            <entry path="C:\Program Files\Java\jre1.8.0_211\lib\rt.jar"/>
+            <entry path="C:\Program Files\Java\jre1.8.0_211\lib\sunrsasign.jar"/>
+            <entry path="C:\Program Files\Java\jre1.8.0_211\lib\jsse.jar"/>
+            <entry path="C:\Program Files\Java\jre1.8.0_211\lib\jce.jar"/>
+            <entry path="C:\Program Files\Java\jre1.8.0_211\lib\charsets.jar"/>
+            <entry path="C:\Program Files\Java\jre1.8.0_211\lib\jfr.jar"/>
+            <entry path="C:\Program Files\Java\jre1.8.0_211\classes"/>
+        </bootpath>
+        <extensionDirs>
+            <entry path="C:\Program Files\Java\jre1.8.0_211\lib\ext"/>
+            <entry path="C:\WINDOWS\Sun\Java\lib\ext"/>
+        </extensionDirs>
+        <endorsedDirs>
+            <entry path="C:\Program Files\Java\jre1.8.0_211\lib\endorsed"/>
+        </endorsedDirs>
+    </libraryInfo>
+    <libraryInfo home="C:\Users\81803\Documents\SAMURAI\Pleiades All in One\java\17" version="17.0.14"/>
+</libraryInfos>
